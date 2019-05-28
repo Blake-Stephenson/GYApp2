@@ -38,8 +38,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent sensorEvent) {
         Log.d(TAG, "onSensorChanged: X: "+ sensorEvent.values[0]+ "Y: "+ sensorEvent.values[1]+ "Z: "+ sensorEvent.values[2]);
 
-        board[2][2] = 1;
-        board[1][1] = 0;
+        board[randInt(0,3)][randInt(0,9)] = 1;
+        board[randInt(0,3)][randInt(0,9)] = 0;
         Log.d(TAG,"LMAO");
         printBoard();
         Log.d(TAG,"ROFL");
@@ -200,12 +200,12 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     }
 
-   /* public static int randInt(int min, int max) {
-        Random rand = null;
-        //int randomNum = rand.nextInt((max - min) + 1) + min;
-        //return randomNum;
-        return 2;
-    }*/
+    public static int randInt(int min, int max) {
+        Random r;
+        int randomNum = r.nextInt((max - min) + 1) + min;
+        return randomNum;
+
+    }
 }
 
 
