@@ -20,7 +20,7 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     Sensor accelerometer;
 
 
-    int[][] board = new int[3][9];
+    int[][] board = new int[4][9];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     }
 
     public void printBoard(){
-        for(int i = 0;i <=3;i++) {
-            for(int j = 0;j<=9;j++) {
+        for(int i = 0;i <4;i++) {
+            for(int j = 0;j<9;j++) {
                 if(board[i][j]==1) {
                     printCell(i,j,1);
                 }else {
