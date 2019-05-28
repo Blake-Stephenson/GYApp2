@@ -17,6 +17,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     private SensorManager sensorManager;
     Sensor accelerometer;
 
+    int[][] board = new int[3][9];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +35,27 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent sensorEvent) {
         Log.d(TAG, "onSensorChanged: X: "+ sensorEvent.values[0]+ "Y: "+ sensorEvent.values[1]+ "Z: "+ sensorEvent.values[2]);
 
-        Button button = findViewById(R.id.button00);
-        button.setBackgroundColor(0xFFAAFF22);
+        printBoard();
 
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void printBoard(){
+        for(int i = 0;i <=3;i++) {
+            for(int j = 0;j<=9;j++){
+                if(board[i][j]==1) {
+                    String cell_button = "button"+i+j;
+                    int btest = -1000055;
+                   /* Button button = findViewById(R.id.btest);
+                    button.setBackgroundColor(0xFF005500);*/
+                }
+            }
+
+        }
     }
 }
 
