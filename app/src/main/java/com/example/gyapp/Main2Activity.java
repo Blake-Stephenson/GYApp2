@@ -18,7 +18,6 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-//bruh
         VideoView videoView;
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setVideoPath("android.resource://"+getPackageName()+"/"+R.raw.thanos_vid);
