@@ -23,8 +23,13 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     int[][] board = new int[11][20];
     ArrayList<int[]> snake;
-    int direction = 0;
-
+    ArrayList<Integer> directions;
+    int direction = 1;
+    int foodX;
+    int foodY;
+    int[] p_temp = {0,0};
+    int[] piece = {0,0};
+    int dir_temp = 1;
     double time = 0;
 
 
@@ -40,7 +45,11 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
         int[] head = {5,10};
         snake = new ArrayList<>();
+        directions = new ArrayList<>();
         snake.add(head);
+        directions.add(1);
+        foodX = randInt(0,10);
+        foodY = randInt(0,19);
 
 }
 
@@ -53,16 +62,65 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
        /* board[randInt(0,10)][randInt(0,19)] = 1;
         board[randInt(0,10)][randInt(0,19)] = 0;*/
 
-        if((time%10)==0){
-            if (direction==0){
-
-            }
-
-        }
-
-
-
         clrBoard(board);
+
+
+
+       if((time%2)==0) {
+           if(sensorEvent.values[0]>5){
+               direction++;
+           }
+           if(sensorEvent.values[0]<-5){
+               direction--;
+           }
+           if(direction == -1)
+               direction = 3;
+           if(direction == 4)
+               direction = 0;
+
+           directions.add(0,direction);
+           for(int i = 0; i<snake.size();i++){
+               piece = snake.get(i);
+               dir_temp  = directions.get(i);
+               if(dir_temp==0) {
+                   piece[0]++;
+               }else if(dir_temp==1) {
+                   piece[1]--;
+               }else if(dir_temp==2) {
+                   piece[0]--;
+               }else if(dir_temp==3) {
+                   piece[1]++;
+               }
+               snake.set(i,piece);
+
+           }
+           if(snake.get(0)[0]==foodX && snake.get(0)[1]==foodY){
+               if(directions.get(snake.size()-1)==0) {
+                   p_temp[0] = (snake.get(snake.size() - 1)[0] - 1);
+                   p_temp[1] = (snake.get(snake.size() - 1)[1]);
+                   snake.add(p_temp);
+               }else if(directions.get(snake.size()-1)==1) {
+                   p_temp[0] = (snake.get(snake.size()-1)[0] );
+                   p_temp[1] = (snake.get(snake.size()-1)[1] + 1);
+                   snake.add(p_temp);
+               }else if(directions.get(snake.size()-1)==2) {
+                   p_temp[0] = (snake.get(snake.size()-1)[0] + 1);
+                   p_temp[1] = (snake.get(snake.size()-1)[1]);
+                   snake.add(p_temp);
+               }else if(directions.get(snake.size()-1)==3) {
+                   p_temp[0] = (snake.get(snake.size()-1)[0]);
+                   p_temp[1] = (snake.get(snake.size()-1)[1] - 1);
+                   snake.add(p_temp);
+               }
+               foodX = randInt(0,10);
+               foodY = randInt(0,19);
+
+           }
+       }
+
+
+        board[foodX][foodY]=2;
+
         snake_board(snake,board);
         printBoard(board);
         Log.d(TAG,"bug???");
@@ -79,6 +137,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
             for(int j = 0;j<20;j++) {
                 if(b[i][j]==1) {
                     printCell(i,j,1);
+                }else if(b[i][j]==2) {
+                    printCell(i,j,2);
                 }else {
                     printCell(i,j,0);
                 }
@@ -780,8 +840,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     }
 
     public void snake_board(ArrayList<int[]> s,int[][] b){
-        for(int[] peice:s){
-            b[peice[0]][peice[1]]=1;
+        for(int[] piece:s){
+            b[piece[0]][piece[1]]=1;
         }
     }
 
