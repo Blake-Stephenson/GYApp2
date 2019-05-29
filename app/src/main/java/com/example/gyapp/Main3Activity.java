@@ -67,10 +67,10 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
 
        if((time%5)==0) {
-           if(sensorEvent.values[0]>5){
+           if(sensorEvent.values[0]>3){
                direction++;
            }
-           if(sensorEvent.values[0]<-5){
+           if(sensorEvent.values[0]<-3){
                direction--;
            }
            if(direction == -1)
@@ -81,26 +81,31 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
            directions.add(0,direction);
            for(int i = 0; i<snake.size();i++){
                piece = snake.get(i);
-               snake.remove(i);
+               Log.d(TAG,"piece x,y1: "+piece[0]+" "+piece[1]);
                dir_temp  = directions.get(i);
                if(dir_temp==0) {
                    piece[0]++;
-                   if(piece[0]>10)
-                       piece[0]=0;
+                   if(piece[0]>10) {
+                       piece[0] = 0;
+                   }
                }else if(dir_temp==1) {
                    piece[1]--;
-                   if(piece[1]<0)
-                       piece[1]=19;
+                   if(piece[1]<0) {
+                       piece[1] = 19;
+                   }
                }else if(dir_temp==2) {
                    piece[0]--;
-                   if(piece[0]<0)
-                       piece[0]=10;
+                   if(piece[0]<0) {
+                       piece[0] = 10;
+                   }
                }else if(dir_temp==3) {
                    piece[1]++;
-                   if(piece[1]>19)
-                       piece[1]=0;
+                   if(piece[1]>19) {
+                       piece[1] = 0;
+                   }
                }
-               snake.add(i,piece);
+               Log.d(TAG,"piece x,y1: "+piece[0]+" "+piece[1]);
+               snake.set(i,piece);
 
            }
 
@@ -833,11 +838,11 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
             }
         }
         if(c==1) {
-            button.setBackgroundColor(0xFF005500);
+            button.setBackgroundColor(0xFF00FF00);
         }else if(c==2) {
-            button.setBackgroundColor(0xFF550000);
+            button.setBackgroundColor(0xFFFF0000);
         }else{
-            button.setBackgroundColor(0xAA000000);
+            button.setBackgroundColor(0x44000000);
         }
 
     }
