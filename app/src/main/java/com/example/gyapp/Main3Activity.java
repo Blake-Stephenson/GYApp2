@@ -66,7 +66,7 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
 
 
-       if((time%2)==0) {
+       if((time%5)==0) {
            if(sensorEvent.values[0]>5){
                direction++;
            }
@@ -81,20 +81,30 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
            directions.add(0,direction);
            for(int i = 0; i<snake.size();i++){
                piece = snake.get(i);
+               snake.remove(i);
                dir_temp  = directions.get(i);
                if(dir_temp==0) {
                    piece[0]++;
+                   if(piece[0]>10)
+                       piece[0]=0;
                }else if(dir_temp==1) {
                    piece[1]--;
+                   if(piece[1]<0)
+                       piece[1]=19;
                }else if(dir_temp==2) {
                    piece[0]--;
+                   if(piece[0]<0)
+                       piece[0]=10;
                }else if(dir_temp==3) {
                    piece[1]++;
+                   if(piece[1]>19)
+                       piece[1]=0;
                }
-               snake.set(i,piece);
+               snake.add(i,piece);
 
            }
-           if(snake.get(0)[0]==foodX && snake.get(0)[1]==foodY){
+
+           if((snake.get(0)[0]==foodX) && (snake.get(0)[1]==foodY)){
                if(directions.get(snake.size()-1)==0) {
                    p_temp[0] = (snake.get(snake.size() - 1)[0] - 1);
                    p_temp[1] = (snake.get(snake.size() - 1)[1]);
