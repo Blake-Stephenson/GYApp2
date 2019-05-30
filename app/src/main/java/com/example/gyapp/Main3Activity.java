@@ -31,7 +31,7 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     int direction = 1;
     int[] food = {0,0};
     int[] p_temp = {0,0};
-    int[] piece = {1,1};
+
     int dir_temp = 1;
     double time = 0;
 
@@ -50,12 +50,17 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         directions = new ArrayList<>();
         snake.clear();
         snake.add(head);
+
+
+
         for(int i = 0;i<snake.size();i++) {
             Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
         }
         directions.add(1);
-        food[0] = randInt(0,10);
-        food[1] = randInt(0,19);
+        //food[0] = randInt(0,10);
+        //food[1] = randInt(0,19);
+        food[0] = randInt(4,8);
+        food[1] = randInt(5,10);
 
 }
 
@@ -72,7 +77,7 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
 
 
-       if((time%4)==0) {
+       if((time%3)==0) {
            if(sensorEvent.values[0]>3){
                direction++;
            }
@@ -80,44 +85,38 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
                direction--;
            }
            int last = snake.size()-1;
+           //Log.d(TAG," before reff snake xy: "+snake.get(last)[0]+" "+snake.get(last)[1]+" piecexy: "+piece[0]+" "+piece[1]);
+           /*piece[0] = snake.get(last)[0];
+           piece[1] = snake.get(last)[1];*/
+           //Log.d(TAG," after reff snake xy: "+snake.get(last)[0]+" "+snake.get(last)[1]+" piecexy: "+piece[0]+" "+piece[1]);
+
+           int[] piece = {1,1};
+           piece[0] = snake.get(snake.size()-1)[0];
+           piece[1] = snake.get(snake.size()-1)[1];
            if(direction == -1 || direction == 3) {
                direction = 3;
-               piece[0] = snake.get(last)[0];
-               piece[1] = snake.get(last)[1];
                piece[1]+=1;
                if(piece[1]>19) {
                    piece[1] = 0;
                }
-               snake.add(piece);
-           }
-           if(direction == 4 || direction == 0) {
+           }else if(direction == 4 || direction == 0) {
                direction = 0;
-               piece[0] = snake.get(last)[0];
-               piece[1] = snake.get(last)[1];
                piece[0]+=1;
                if(piece[0]>10) {
                    piece[0] = 0;
                }
-               snake.add(piece);
-           }
-           if(direction == 1) {
-               piece[0] = snake.get(last)[0];
-               piece[1] = snake.get(last)[1];
+           }else if(direction == 1) {
                piece[1]-=1;
                if(piece[1]<0) {
                    piece[1] = 19;
                }
-               snake.add(piece);
-           }
-           if(direction == 2) {
-               piece[0] = snake.get(last)[0];
-               piece[1] = snake.get(last)[1];
+           }else{
                piece[0]-=1;
                if(piece[0]<0) {
                    piece[0] = 10;
                }
-               snake.add(piece);
            }
+           snake.add(piece);
 
            Log.d(TAG,"before food check");
 
@@ -128,8 +127,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
            }
            Log.d(TAG,"snake xy: "+snake.get(0)[0]+" "+snake.get(0)[1]+" foodxy: "+food[0]+" "+food[1]);
            if(snake.get(last)[0] == food[0] && snake.get(last)[1]==food[1]){
-               food[0] = randInt(0,10);
-               food[1] = randInt(0,19);
+               food[0] = randInt(4,8);
+               food[1] = randInt(5,10);
            }else{
                snake.remove(0);
            }
@@ -911,8 +910,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     }
 
     public void snake_board(ArrayList<int[]> s,int[][] b){
-        for(int[] piece:s){
-            b[piece[0]][piece[1]]=1;
+        for(int i = 0;i<s.size();i++){
+            b[s.get(i)[0]][s.get(i)[1]]=1;
         }
     }
 
