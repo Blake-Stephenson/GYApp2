@@ -15,6 +15,9 @@ import java.util.Random;
 
 public class Main3Activity extends AppCompatActivity implements SensorEventListener {
 
+
+
+
     private static final String TAG = "Main3Activity";
 
     private SensorManager sensorManager;
@@ -23,12 +26,12 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     int[][] board = new int[11][20];
     ArrayList<int[]> snake;
+    int[] head = {5,10};
     ArrayList<Integer> directions;
     int direction = 1;
-    int foodX;
-    int foodY;
+    int[] food = {0,0};
     int[] p_temp = {0,0};
-    int[] piece = {0,0};
+    int[] piece = {1,1};
     int dir_temp = 1;
     double time = 0;
 
@@ -38,25 +41,28 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        Log.d(TAG, " Starts Sensor");
+        Log.i(TAG, " Starts Sensor");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(Main3Activity.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
 
-        int[] head = {5,10};
         snake = new ArrayList<>();
         directions = new ArrayList<>();
+        snake.clear();
         snake.add(head);
+        for(int i = 0;i<snake.size();i++) {
+            Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
+        }
         directions.add(1);
-        foodX = randInt(0,10);
-        foodY = randInt(0,19);
+        food[0] = randInt(0,10);
+        food[1] = randInt(0,19);
 
 }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         time++;
-        Log.d(TAG, "onSensorChanged: X: "+ sensorEvent.values[0]+ "Y: "+ sensorEvent.values[1]+ "Z: "+ sensorEvent.values[2]);
+        Log.i(TAG, "onSensorChanged: X: "+ sensorEvent.values[0]+ "Y: "+ sensorEvent.values[1]+ "Z: "+ sensorEvent.values[2]);
 
         //random green boxes
        /* board[randInt(0,10)][randInt(0,19)] = 1;
@@ -66,19 +72,69 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
 
 
-       if((time%5)==0) {
+       if((time%4)==0) {
            if(sensorEvent.values[0]>3){
                direction++;
            }
            if(sensorEvent.values[0]<-3){
                direction--;
            }
-           if(direction == -1)
+           int last = snake.size()-1;
+           if(direction == -1 || direction == 3) {
                direction = 3;
-           if(direction == 4)
+               piece[0] = snake.get(last)[0];
+               piece[1] = snake.get(last)[1];
+               piece[1]+=1;
+               if(piece[1]>19) {
+                   piece[1] = 0;
+               }
+               snake.add(piece);
+           }
+           if(direction == 4 || direction == 0) {
                direction = 0;
+               piece[0] = snake.get(last)[0];
+               piece[1] = snake.get(last)[1];
+               piece[0]+=1;
+               if(piece[0]>10) {
+                   piece[0] = 0;
+               }
+               snake.add(piece);
+           }
+           if(direction == 1) {
+               piece[0] = snake.get(last)[0];
+               piece[1] = snake.get(last)[1];
+               piece[1]-=1;
+               if(piece[1]<0) {
+                   piece[1] = 19;
+               }
+               snake.add(piece);
+           }
+           if(direction == 2) {
+               piece[0] = snake.get(last)[0];
+               piece[1] = snake.get(last)[1];
+               piece[0]-=1;
+               if(piece[0]<0) {
+                   piece[0] = 10;
+               }
+               snake.add(piece);
+           }
 
-           directions.add(0,direction);
+           Log.d(TAG,"before food check");
+
+
+           Log.d(TAG, "Snake length: "+snake.size());
+           for(int i = 0;i<snake.size();i++) {
+               Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
+           }
+           Log.d(TAG,"snake xy: "+snake.get(0)[0]+" "+snake.get(0)[1]+" foodxy: "+food[0]+" "+food[1]);
+           if(snake.get(last)[0] == food[0] && snake.get(last)[1]==food[1]){
+               food[0] = randInt(0,10);
+               food[1] = randInt(0,19);
+           }else{
+               snake.remove(0);
+           }
+           Log.d(TAG,"after food check");
+           /*directions.add(0,direction);
            for(int i = 0; i<snake.size();i++){
                piece = snake.get(i);
                Log.d(TAG,"piece x,y1: "+piece[0]+" "+piece[1]);
@@ -130,15 +186,15 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
                foodX = randInt(0,10);
                foodY = randInt(0,19);
 
-           }
+           }*/
        }
 
 
-        board[foodX][foodY]=2;
+        board[food[0]][food[1]]=2;
 
         snake_board(snake,board);
         printBoard(board);
-        Log.d(TAG,"bug???");
+
 
     }
 
