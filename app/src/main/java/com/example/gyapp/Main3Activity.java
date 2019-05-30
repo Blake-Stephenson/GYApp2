@@ -1,6 +1,7 @@
 package com.example.gyapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -44,40 +45,28 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         Log.i(TAG, " Starts Sensor");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(Main3Activity.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(Main3Activity.this,accelerometer,SensorManager.SENSOR_DELAY_GAME);
 
         snake = new ArrayList<>();
         directions = new ArrayList<>();
         snake.clear();
         snake.add(head);
 
-
-
         for(int i = 0;i<snake.size();i++) {
             Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
         }
         directions.add(1);
-        //food[0] = randInt(0,10);
-        //food[1] = randInt(0,19);
-        food[0] = randInt(4,8);
-        food[1] = randInt(5,10);
-
+        food[0] = randInt(0,10);
+        food[1] = randInt(0,19);
 }
-
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         time++;
         Log.i(TAG, "onSensorChanged: X: "+ sensorEvent.values[0]+ "Y: "+ sensorEvent.values[1]+ "Z: "+ sensorEvent.values[2]);
 
-        //random green boxes
-       /* board[randInt(0,10)][randInt(0,19)] = 1;
-        board[randInt(0,10)][randInt(0,19)] = 0;*/
-
         clrBoard(board);
 
-
-
-       if((time%3)==0) {
+       if((time%10)==0) {
            if(sensorEvent.values[0]>3){
                direction++;
            }
@@ -85,10 +74,6 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
                direction--;
            }
            int last = snake.size()-1;
-           //Log.d(TAG," before reff snake xy: "+snake.get(last)[0]+" "+snake.get(last)[1]+" piecexy: "+piece[0]+" "+piece[1]);
-           /*piece[0] = snake.get(last)[0];
-           piece[1] = snake.get(last)[1];*/
-           //Log.d(TAG," after reff snake xy: "+snake.get(last)[0]+" "+snake.get(last)[1]+" piecexy: "+piece[0]+" "+piece[1]);
 
            int[] piece = {1,1};
            piece[0] = snake.get(snake.size()-1)[0];
@@ -117,83 +102,35 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
                }
            }
            snake.add(piece);
-
-           Log.d(TAG,"before food check");
-
-
            Log.d(TAG, "Snake length: "+snake.size());
            for(int i = 0;i<snake.size();i++) {
                Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
            }
            Log.d(TAG,"snake xy: "+snake.get(0)[0]+" "+snake.get(0)[1]+" foodxy: "+food[0]+" "+food[1]);
            if(snake.get(last)[0] == food[0] && snake.get(last)[1]==food[1]){
-               food[0] = randInt(4,8);
-               food[1] = randInt(5,10);
+               food[0] = randInt(0,10);
+               food[1] = randInt(0,19);
            }else{
                snake.remove(0);
            }
            Log.d(TAG,"after food check");
-           /*directions.add(0,direction);
-           for(int i = 0; i<snake.size();i++){
-               piece = snake.get(i);
-               Log.d(TAG,"piece x,y1: "+piece[0]+" "+piece[1]);
-               dir_temp  = directions.get(i);
-               if(dir_temp==0) {
-                   piece[0]++;
-                   if(piece[0]>10) {
-                       piece[0] = 0;
-                   }
-               }else if(dir_temp==1) {
-                   piece[1]--;
-                   if(piece[1]<0) {
-                       piece[1] = 19;
-                   }
-               }else if(dir_temp==2) {
-                   piece[0]--;
-                   if(piece[0]<0) {
-                       piece[0] = 10;
-                   }
-               }else if(dir_temp==3) {
-                   piece[1]++;
-                   if(piece[1]>19) {
-                       piece[1] = 0;
-                   }
+           int[] head_temp = snake.get(snake.size()-1);
+           for(int i =0;i<(snake.size()-1);i++){
+               if(snake.get(i)[0]==head_temp[0] && snake.get(i)[1]==head_temp[1]){
+                   int value= snake.size();
+                   Intent intent = new Intent(Main3Activity.this, Main2Activity.class);
+                   intent.putExtra("key",value);
+                   startActivity(intent);
+                   startActivity(new Intent(Main3Activity.this , Main2Activity.class));
                }
-               Log.d(TAG,"piece x,y1: "+piece[0]+" "+piece[1]);
-               snake.set(i,piece);
-
            }
 
-           if((snake.get(0)[0]==foodX) && (snake.get(0)[1]==foodY)){
-               if(directions.get(snake.size()-1)==0) {
-                   p_temp[0] = (snake.get(snake.size() - 1)[0] - 1);
-                   p_temp[1] = (snake.get(snake.size() - 1)[1]);
-                   snake.add(p_temp);
-               }else if(directions.get(snake.size()-1)==1) {
-                   p_temp[0] = (snake.get(snake.size()-1)[0] );
-                   p_temp[1] = (snake.get(snake.size()-1)[1] + 1);
-                   snake.add(p_temp);
-               }else if(directions.get(snake.size()-1)==2) {
-                   p_temp[0] = (snake.get(snake.size()-1)[0] + 1);
-                   p_temp[1] = (snake.get(snake.size()-1)[1]);
-                   snake.add(p_temp);
-               }else if(directions.get(snake.size()-1)==3) {
-                   p_temp[0] = (snake.get(snake.size()-1)[0]);
-                   p_temp[1] = (snake.get(snake.size()-1)[1] - 1);
-                   snake.add(p_temp);
-               }
-               foodX = randInt(0,10);
-               foodY = randInt(0,19);
-
-           }*/
        }
-
 
         board[food[0]][food[1]]=2;
 
         snake_board(snake,board);
         printBoard(board);
-
 
     }
 

@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onButtonTapStart(View view){
-
         startActivity(new Intent(MainActivity.this , Main3Activity.class));
     }
 
