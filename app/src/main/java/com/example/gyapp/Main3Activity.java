@@ -28,12 +28,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     int[][] board = new int[11][20];
     ArrayList<int[]> snake;
     int[] head = {5,10};
-    ArrayList<Integer> directions;
     int direction = 1;
     int[] food = {0,0};
-    int[] p_temp = {0,0};
-
-    int dir_temp = 1;
     double time = 0;
 
 
@@ -48,14 +44,8 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         sensorManager.registerListener(Main3Activity.this,accelerometer,SensorManager.SENSOR_DELAY_GAME);
 
         snake = new ArrayList<>();
-        directions = new ArrayList<>();
         snake.clear();
         snake.add(head);
-
-        for(int i = 0;i<snake.size();i++) {
-            Log.d(TAG, "snake parts" + snake.get(i)[0] + " " + snake.get(i)[1]);
-        }
-        directions.add(1);
         food[0] = randInt(0,10);
         food[1] = randInt(0,19);
 }
@@ -117,16 +107,13 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
            int[] head_temp = snake.get(snake.size()-1);
            for(int i =0;i<(snake.size()-1);i++){
                if(snake.get(i)[0]==head_temp[0] && snake.get(i)[1]==head_temp[1]){
-                   int value= snake.size();
-                   Intent intent = new Intent(Main3Activity.this, Main2Activity.class);
-                   intent.putExtra("key",value);
-                   startActivity(intent);
                    startActivity(new Intent(Main3Activity.this , Main2Activity.class));
                }
            }
 
        }
-
+        Button b = findViewById(R.id.button00);
+        b.setText(String.valueOf(snake.size()));
         board[food[0]][food[1]]=2;
 
         snake_board(snake,board);
