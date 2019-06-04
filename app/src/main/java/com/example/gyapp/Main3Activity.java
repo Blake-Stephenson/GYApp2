@@ -110,7 +110,6 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
                    startActivity(new Intent(Main3Activity.this , Main2Activity.class));
                }
            }
-
        }
         Button b = findViewById(R.id.button00);
         b.setText(String.valueOf(snake.size()));

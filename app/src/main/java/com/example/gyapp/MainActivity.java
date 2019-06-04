@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onButtonTapBruh(View v){
+    public void onButtonTapNotification(View v){
         Toast myToast = Toast.makeText(getApplicationContext(), "Jeeez", Toast.LENGTH_LONG);
         myToast.show();
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
 
-// notificationId is a unique int for each notification that you must define
+        // notificationId is a unique int for each notification that you must define
         int notificationId = 1;
         buildNotification("top text", "bottom text");
         notificationManager.notify(notificationId, builder.build());
