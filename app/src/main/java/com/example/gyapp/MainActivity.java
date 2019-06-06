@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 
 /**
- *This is the title/ start screen
+ *This is the title/start screen
+ * @author B. Stephenson, D. Goodman
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
      * @param v
      */
     public void onButtonTapNotification(View v){
-        Toast myToast = Toast.makeText(getApplicationContext(), "Jeeez", Toast.LENGTH_LONG);
+        Toast myToast = Toast.makeText(getApplicationContext(), "!!!!", Toast.LENGTH_LONG);
         myToast.show();
 
         final MediaPlayer death_sound = MediaPlayer.create(this, R.raw.death_sound);

@@ -14,8 +14,12 @@ import android.widget.VideoView;
 public class Main2Activity extends AppCompatActivity {
 
 
-   // MediaPlayer mdx;
 
+    /**
+     * initializes the activity
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +33,24 @@ public class Main2Activity extends AppCompatActivity {
         Button button = findViewById(R.id.button2);
         button.setText("Play again");
     }
+
+    /**
+     * Restarts the game
+     *
+     * @param view
+     */
     public void onButtonTapEnd(View view){
         play_music(false);
         startActivity(new Intent(Main2Activity.this , MainActivity.class));
+        finish();
     }
+
+    /**
+     * Sets the state of the music
+     * True plays music, False stops the music
+     *
+     * @param b
+     */
     public void play_music(boolean b) {
         final MediaPlayer pump_music = MediaPlayer.create(this, R.raw.pump);
         if (b == true) {

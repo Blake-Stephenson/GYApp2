@@ -14,6 +14,11 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * This is the game screen
+ * @author B. Stephenson, D. Goodman
+ */
 public class Main3Activity extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "Main3Activity";
@@ -28,7 +33,11 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
     int[] food = {0,0};
     double time = 0;
 
-
+    /**
+     * initializes the activity
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +52,15 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         snake.clear();
         snake.add(head);
         food[0] = randInt(0,10);
-        food[1] = randInt(0,19);
-}
+        food[1] = randInt(0,16
+        );
+    }
+
+    /**
+     * Is automatically called every 10ms to update the position of accelerometer
+     *
+     * @param sensorEvent
+     */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         time++;
@@ -95,7 +111,7 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
            Log.d(TAG,"snake xy: "+snake.get(0)[0]+" "+snake.get(0)[1]+" foodxy: "+food[0]+" "+food[1]);
            if(snake.get(last)[0] == food[0] && snake.get(last)[1]==food[1]){
                food[0] = randInt(0,10);
-               food[1] = randInt(0,19);
+               food[1] = randInt(0,16);
            }else{
                snake.remove(0);
            }
@@ -116,11 +132,22 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     }
 
+    /**
+     * Runs when accuracy is changed
+     *
+     * @param sensor
+     * @param accuracy
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
+    /**
+     * Prints the 2d board array on the display using the printCell method
+     *
+     * @param b
+     */
     public void printBoard(int[][] b){
         for(int i = 0;i <11;i++) {
             for(int j = 0;j<20;j++) {
@@ -136,6 +163,14 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
         }
     }
 
+    /**
+     * changes the colour of a cell using its x and y position (i,j) and its colour is the c value
+     * c = 1 is Green, c = 2 is Red, any other value for c is white
+     *
+     * @param i
+     * @param j
+     * @param c
+     */
     public void printCell(int i,int j,int c){
         Button button;
         button = findViewById(R.id.button00);
@@ -821,6 +856,13 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     }
 
+    /**
+     * Returns a random int between the min and max
+     *
+     * @param min
+     * @param max
+     * @return
+     */
     public static int randInt(int min, int max) {
         Random r = new Random();
         int randomNum = r.nextInt((max - min) + 1) + min;
@@ -828,12 +870,23 @@ public class Main3Activity extends AppCompatActivity implements SensorEventListe
 
     }
 
+    /**
+     * Adds the Snakes coordinates (which are stored in an ArrayList) to the 2d board array
+     *
+     * @param s
+     * @param b
+     */
     public void snake_board(ArrayList<int[]> s,int[][] b){
         for(int i = 0;i<s.size();i++){
             b[s.get(i)[0]][s.get(i)[1]]=1;
         }
     }
 
+    /**
+     * Clears the 2d board array
+     *
+     * @param b
+     */
     public void clrBoard(int[][] b){
         for(int i = 0;i <11;i++) {
             for (int j = 0; j < 20; j++) {
