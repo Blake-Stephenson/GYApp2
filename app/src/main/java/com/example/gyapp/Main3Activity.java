@@ -16,14 +16,10 @@ import java.util.Random;
 
 public class Main3Activity extends AppCompatActivity implements SensorEventListener {
 
-
-
-
     private static final String TAG = "Main3Activity";
 
     private SensorManager sensorManager;
     Sensor accelerometer;
-
 
     int[][] board = new int[11][20];
     ArrayList<int[]> snake;

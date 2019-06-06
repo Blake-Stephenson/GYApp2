@@ -13,11 +13,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+
+/**
+ *This is the title/ start screen
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "1";
     NotificationCompat.Builder builder;
 
+    /**
+     * initializes the activity
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * When the button in the bottom left is pressed a toast is displayed, a notification is given, and a sound is played
+     *
+     * @param v
+     */
     public void onButtonTapNotification(View v){
         Toast myToast = Toast.makeText(getApplicationContext(), "Jeeez", Toast.LENGTH_LONG);
         myToast.show();
@@ -39,16 +53,25 @@ public class MainActivity extends AppCompatActivity {
 
         // notificationId is a unique int for each notification that you must define
         int notificationId = 1;
-        buildNotification("top text", "bottom text");
-        notificationManager.notify(notificationId, builder.build());
-        buildNotification("heehee", "bottom text");
+        buildNotification("Hey!", "Makes sure to keep playing!!");
         notificationManager.notify(notificationId, builder.build());
     }
 
+    /**
+     * When the start button is pressed move to next activity
+     *
+     * @param view
+     */
     public void onButtonTapStart(View view){
         startActivity(new Intent(MainActivity.this , Main3Activity.class));
     }
 
+    /**
+     * Builds a notification from a given head and body
+     *
+     * @param head
+     * @param sub
+     */
     public void buildNotification(String head, String sub) {
         builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.notification_icon)
@@ -57,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
+    /**
+     * Builds the channel for the notification
+     */
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
